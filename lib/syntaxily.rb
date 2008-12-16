@@ -11,7 +11,7 @@ module Syntaxily
   def self.parse(text)
     doc = Nokogiri::HTML.parse(text)
     doc.search('pre.code').each do |node|
-      lexer = node['rel'].to_sym
+      lexer = node['rel']
       lexed = node.text.syntaxify(lexer)
       node.replace Nokogiri::HTML.parse(lexed)
     end
