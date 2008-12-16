@@ -29,9 +29,9 @@ describe Syntaxily do
   describe "rendering from markup" do
     def render
       Syntaxily.parse <<-TEXT
-      <h1>This is normal</h1>
-      <pre class="code" rel="ruby">def foo; :bar end</pre>
-      <h1>Good bye</h1>
+        <h1>This is normal</h1>
+        <pre class="code" rel="ruby">def foo; :bar end</pre>
+        <h1>Good bye</h1>
       TEXT
     end
     
