@@ -1,3 +1,5 @@
 h1. syntaxily
 
+Syntax highlighting for strings and stuff.
+
 (c) Copyright 2008 Pat Nakajima, released under MIT License.
