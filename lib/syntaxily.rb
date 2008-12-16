@@ -8,13 +8,29 @@ require 'albino'
 require 'string'
 
 module Syntaxily
+  class LexerNotFound < StandardError; end
+  
   def self.parse(text)
     doc = Nokogiri::HTML.parse(text)
     doc.search('pre.code').each do |node|
       lexer = node['rel']
-      lexed = node.text.syntaxify(lexer)
-      node.replace Nokogiri::HTML.parse(lexed)
+      begin
+        lexed = node.text.syntaxify(lexer)
+        node.replace Nokogiri::HTML.parse(lexed)
+      rescue LexerNotFound
+        next
+      end
     end
     doc.to_html
+  end
+  
+  def self.available_lexers
+    @available_lexers ||= begin
+      `pygmentize -L`.split(/\n\n/)[1] \
+        .split(/\n/) \
+        .select { |line| line =~ /^\*/ } \
+        .map { |line| line.gsub(/\* ([^:]+):/, '\1') } \
+        .join(', ')
+    end
   end
 end

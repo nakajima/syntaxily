@@ -13,6 +13,13 @@ describe Syntaxily do
     end
   end
   
+  describe "available lexers" do
+    it "finds available lexers from pygments" do
+      Syntaxily.available_lexers.should include('ruby')
+      Syntaxily.available_lexers.should_not include('foobar')
+    end
+  end
+  
   describe "regular string helper" do
     def render
       "def foo; :bar end".syntaxify(:ruby)
@@ -23,6 +30,12 @@ describe Syntaxily do
       result.should have(1).keywords.with_text('def')
       result.should have(1).keywords.with_text('end')
       result.should have(1).symbols.with_text(':bar')
+    end
+    
+    it "raises LexerNotFound when lexer doesn't exist" do
+      proc {
+        "def foo; :bar end".syntaxify(:foobar)
+      }.should raise_error(Syntaxily::LexerNotFound)
     end
   end
   
@@ -44,6 +57,13 @@ describe Syntaxily do
       result.should have(1).keywords.with_text('def')
       result.should have(1).keywords.with_text('end')
       result.should have(1).symbols.with_text(':bar')
+    end
+    
+    it "rescues LexerNotFound errors" do
+      proc {
+        string = %(<pre class="code" rel="foobar">Something</pre>)
+        Syntaxily.parse(string)
+      }.should_not raise_error
     end
   end
 end
