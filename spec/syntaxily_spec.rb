@@ -26,8 +26,6 @@ describe Syntaxily do
     end
   end
   
-  
-  
   describe "rendering from markup" do
     def render
       Syntaxily.parse <<-TEXT
