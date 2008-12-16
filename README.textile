@@ -1,3 +1,9 @@
 h1. syntaxily
 
 Syntax highlighting for strings and stuff.
+
+Uses the pygments library, and the Albino Ruby wrapper.
+
+Parses syntaxable bits out of markup using Nokogiri.
+
+Everything else by Pat Nakajima.
