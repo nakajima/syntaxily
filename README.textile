@@ -2,8 +2,23 @@ h1. syntaxily
 
 Syntax highlighting for strings and stuff.
 
-Uses the pygments library, and the Albino Ruby wrapper.
+h3. Usage
 
-Parses syntaxable bits out of markup using Nokogiri.
+Super simple usage:
 
-Everything else by Pat Nakajima.
+  "def foo; :bar end".syntaxify(:ruby)
+  
+More advanced usage:
+
+<pre>
+Syntaxily.parse <<-HTML
+  <h1>Here's some code:</h1>
+  <pre class="code" rel="ruby">def foo; :bar end</pre>
+HTML
+</pre>
+
+h3. Credits
+
+* Uses the pygments library, and the Albino Ruby wrapper.
+* Parses syntaxable bits out of markup using Nokogiri.
+* Everything else by Pat Nakajima.
