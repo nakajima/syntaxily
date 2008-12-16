@@ -32,11 +32,13 @@ describe Syntaxily do
     def render
       Syntaxily.parse <<-TEXT
       <h1>This is normal</h1>
-      
       <pre class="code" rel="ruby">def foo; :bar end</pre>
-      
-      <p>Good bye</p>
+      <h1>Good bye</h1>
       TEXT
+    end
+    
+    it "retains old markup" do
+      result.should have(2).headers
     end
     
     it "syntax highlights within pre tag" do
