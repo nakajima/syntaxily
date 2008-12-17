@@ -16,7 +16,7 @@ module Syntaxily
       lexer = node['rel']
       begin
         lexed = node.text.syntaxify(lexer)
-        node.replace Nokogiri::HTML.parse(lexed)
+        node.replace Nokogiri::HTML.parse(lexed).at('body *')
       rescue LexerNotFound
         next
       end
