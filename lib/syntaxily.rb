@@ -11,17 +11,17 @@ module Syntaxily
   class LexerNotFound < StandardError; end
   
   def self.parse(text)
-    doc = Nokogiri::HTML.parse(text)
+    doc = Nokogiri::HTML.parse("<root>" + text + "</root>")
     doc.search('pre.code').each do |node|
       lexer = node['rel']
       begin
         lexed = node.text.syntaxify(lexer)
-        node.replace Nokogiri::HTML.parse(lexed).at('body *')
+        node.replace Nokogiri::HTML.parse(lexed).at('html body *')
       rescue LexerNotFound
         next
       end
     end
-    doc.to_html
+    doc.at('root').inner_html
   end
   
   def self.available_lexers
