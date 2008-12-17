@@ -11,7 +11,7 @@ module Syntaxily
   class LexerNotFound < StandardError; end
   
   def self.parse(text)
-    doc = Nokogiri::HTML.parse("<root>" + text + "</root>")
+    doc = Nokogiri::HTML.fragment(text)
     doc.search('pre.code').each do |node|
       lexer = node['rel']
       begin
@@ -21,7 +21,7 @@ module Syntaxily
         next
       end
     end
-    doc.at('root').inner_html
+    doc.to_html
   end
   
   def self.available_lexers
