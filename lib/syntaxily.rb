@@ -26,7 +26,7 @@ module Syntaxily
   
   def self.available_lexers
     @available_lexers ||= begin
-      `pygmentize -L`.split(/\n\n/)[1] \
+      Albino.new("").execute("pygmentize -L") \
         .split(/\n/) \
         .select { |line| line =~ /^\*/ } \
         .map { |line| line.gsub(/\* ([^:]+):/, '\1') } \
